@@ -76,9 +76,10 @@ function setup()
     gs.lastRender = gs.lastTick
     gs.tickLength = 15 //ms
 
-    gs.numbObj = 100;
+    gs.numbObj = 1000;
     gs.objs = [];
-    gs.elements_k = [50, 100, 50]; // radius or wall side
+    //gs.elements_k = [50, 100, 50]; // radius or wall side
+    gs.elements_k = [5, 10, 5]; // radius or wall side
     gs.base_obj_speed = 3;
     for(let i = 0; i < gs.numbObj; i++)
     {
@@ -246,7 +247,7 @@ function locate(f_n, f_x_offs, f_y_offs, is_up, offset_x = 0)
 
 function test_collision_demonstrate()
 {
-    test_ball_ball();
+    //test_ball_ball();
     //test_ball_triangle();
     //test_ball_hex();
     //test_hex_hex();
