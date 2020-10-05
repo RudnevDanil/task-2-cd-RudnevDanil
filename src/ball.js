@@ -77,16 +77,15 @@ export default class Ball
                     let B_line = b_x - a_x;
                     let C_line = a_x * b_y - b_x * a_y;
                     let byf1 = this._dist_lp(A_line, B_line, C_line, this.x, this.y);
-                    if (byf1 > -this.k) {
+                    if (byf1 > -this.k)
+                    {
                         // line B --- C
-
                         A_line = b_y - c_y;
                         B_line = c_x - b_x;
                         C_line = b_x * c_y - c_x * b_y;
                         let byf2 = this._dist_lp(A_line, B_line, C_line, this.x, this.y);
                         if (byf2 > -this.k) {
                             // line C --- A
-
                             A_line = c_y - a_y;
                             B_line = a_x - c_x;
                             C_line = c_x * a_y - a_x * c_y;
