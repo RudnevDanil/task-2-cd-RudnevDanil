@@ -1,3 +1,7 @@
+import Ball from "./ball";
+import Hex from "./hex";
+
+
 export default class Triangle
 {
     constructor(x, y, k, base_obj_speed, canv_w, canv_h)
@@ -36,37 +40,36 @@ export default class Triangle
             this.vy *= -1;
     }
 
-    /*get left()
+    check_intersects(obj)
     {
-        return this.x - this.p2;
-    }
+        if(this.touched >= 3 || obj.touched >= 3)
+            return;
 
-    get right()
-    {
-        return this.x + this.p2;
-    }
+        let is_intersected = false;
+        if (obj instanceof Ball)
+        {
+            obj.check_intersects(this);
+            return;
+        }
+        else if (obj instanceof Triangle)
+        {
 
-    get top()
-    {
-        return this.y - this.p1;
-    }
+        }
+        else if (obj instanceof Hex)
+        {
 
-    get bottom()
-    {
-        return this.y + this.p1;
-    }
-
-    contains(point)
-    {
-        //return (   point.x >= this.x - this.r
-            //&& point.x <= this.x + this.r
-            //&& point.y >= this.y - this.r
-            //&& point.y <= this.y + this.r);
-    }
-*/
-    check_intersects(triangle)
-    {
-        //return ((Math.sqrt((ball.x - this.x)*(ball.x - this.x)+(ball.y - this.y)*(ball.y - this.y))) < this.r + ball.r);
+        }
+        if(is_intersected)
+        {
+            let this_vx_sign = 1;
+            let this_vy_sign = 1;
+            if(this.x < obj.x)
+                this_vx_sign = -1;
+            if(this.y < obj.y)
+                this_vy_sign = -1;
+            this.intersected(this_vx_sign, this_vy_sign);
+            obj.intersected(-this_vx_sign, -this_vy_sign);
+        }
     }
 
 

@@ -35,33 +35,10 @@ export default class Ball
             this.vy *= -1;
     }
 
-    /*get left()
+    _dist_lp(A,B,C,x,y)
     {
-        return this.k
+        return (A * x + B * y + C) / Math.sqrt(A * A + B * B);
     }
-
-    get right()
-    {
-        return this.k
-    }
-
-    get top()
-    {
-        return this.k
-    }
-
-    get bottom()
-    {
-        return this.k
-    }
-
-    contains(point)
-    {
-        return (   point.x >= this.x - this.k
-                && point.x <= this.x + this.k
-                && point.y >= this.y - this.k
-                && point.y <= this.y + this.k);
-    }*/
 
     check_intersects(obj)
     {
@@ -82,9 +59,9 @@ export default class Ball
             let dist = Math.sqrt((obj.x - this.x)*(obj.x - this.x)+(obj.y + obj.p4 - this.y)*(obj.y + obj.p4 - this.y));
             if(dist < this.k + obj.p3) // ball touches outside radius
             {
-                if(dist < this.k + obj.p3 / 2) {
+                if(dist < this.k + obj.p3 / 2)
+                {
                     is_intersected = true; // ball touches inside radius
-                    //console.log("d = ", dist, " this.k = ", this.k, "r_ins = ", obj.p3 / 2);
                 }
                 else
                 {
@@ -99,27 +76,26 @@ export default class Ball
                     let A_line = a_y - b_y;
                     let B_line = b_x - a_x;
                     let C_line = a_x * b_y - b_x * a_y;
-                    let byf1 = (A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line));
+                    let byf1 = this._dist_lp(A_line, B_line, C_line, this.x, this.y);
                     if (byf1 > -this.k) {
                         // line B --- C
 
                         A_line = b_y - c_y;
                         B_line = c_x - b_x;
                         C_line = b_x * c_y - c_x * b_y;
-                        let byf2 = (A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line));
+                        let byf2 = this._dist_lp(A_line, B_line, C_line, this.x, this.y);
                         if (byf2 > -this.k) {
                             // line C --- A
 
                             A_line = c_y - a_y;
                             B_line = a_x - c_x;
                             C_line = c_x * a_y - a_x * c_y;
-
-                            let byf3 = (A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line));
-                            //console.log("byf1 = ", byf1, "  byf2 = ", byf2, "  byf3 = ", byf3, "  this.k = ", this.k);
+                            let byf3 = this._dist_lp(A_line, B_line, C_line, this.x, this.y);
                             if (byf3 > -this.k)
                             {
-                                let min_dist = this.k + obj.p1 * 2;
-                                if (Math.abs(byf1) < min_dist && Math.abs(byf2) < min_dist && Math.abs(byf3) < min_dist) {
+                                let max_touch_dist = this.k + obj.p1 * 2;
+                                if (Math.abs(byf1) < max_touch_dist && Math.abs(byf2) < max_touch_dist && Math.abs(byf3) < max_touch_dist)
+                                {
                                     is_intersected = true;
                                 }
                             }
@@ -133,9 +109,9 @@ export default class Ball
             let dist = Math.sqrt((obj.x - this.x)*(obj.x - this.x)+(obj.y - this.y)*(obj.y - this.y));
             if(dist < this.k + obj.k) // ball touches outside radius
             {
-                if(dist < this.k + obj.p3)
+                if(dist < this.k + obj.p1)
                     is_intersected = true; // ball touches inside radius
-                /*else
+                else
                 {
                     let a_x = obj.x - obj.p2;
                     let a_y = obj.y + obj.p1;
@@ -145,7 +121,7 @@ export default class Ball
                     let A_line = a_y - b_y;
                     let B_line = b_x - a_x;
                     let C_line = a_x * b_y - b_x * a_y;
-                    if ((A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line)) < this.k)
+                    if (this._dist_lp(A_line, B_line, C_line, this.x, this.y) > -this.k)
                     {
                         let c_x = obj.x - obj.p2;
                         let c_y = obj.y - obj.p1;
@@ -153,7 +129,7 @@ export default class Ball
                         A_line = b_y - c_y;
                         B_line = c_x - b_x;
                         C_line = b_x * c_y - c_x * b_y;
-                        if ((A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line)) < this.k)
+                        if (this._dist_lp(A_line, B_line, C_line, this.x, this.y) > -this.k)
                         {
                             let d_x = obj.x + obj.p2;
                             let d_y = obj.y - obj.p1;
@@ -161,7 +137,7 @@ export default class Ball
                             A_line = c_y - d_y;
                             B_line = d_x - c_x;
                             C_line = c_x * d_y - d_x * c_y;
-                            if ((A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line)) < this.k)
+                            if (this._dist_lp(A_line, B_line, C_line, this.x, this.y) > -this.k)
                             {
                                 let e_x = obj.x + obj.k;
                                 let e_y = obj.y;
@@ -169,21 +145,21 @@ export default class Ball
                                 A_line = d_y - e_y;
                                 B_line = e_x - d_x;
                                 C_line = d_x * e_y - e_x * d_y;
-                                if ((A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line)) < this.k)
+                                if (this._dist_lp(A_line, B_line, C_line, this.x, this.y) > -this.k)
                                 {
+                                    let f_x = obj.x + obj.p2;
+                                    let f_y = obj.y + obj.p1;
                                     // line E --- F
                                     A_line = e_y - f_y;
                                     B_line = f_x - e_x;
                                     C_line = e_x * f_y - f_x * e_y;
-                                    if ((A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line)) < this.k)
+                                    if (this._dist_lp(A_line, B_line, C_line, this.x, this.y) > -this.k)
                                     {
-                                        let f_x = obj.x + obj.p2;
-                                        let f_y = obj.y + obj.p1;
                                         // line F --- A
                                         A_line = f_y - a_y;
                                         B_line = a_x - f_x;
                                         C_line = f_x * a_y - a_x * f_y;
-                                        if ((A_line * this.x + B_line * this.y + C_line) / (Math.sqrt(A_line * A_line + B_line * B_line)) < this.k)
+                                        if (this._dist_lp(A_line, B_line, C_line, this.x, this.y) > -this.k)
                                         {
                                             is_intersected = true;
                                         }
@@ -192,7 +168,7 @@ export default class Ball
                             }
                         }
                     }
-                }*/
+                }
             }
         }
 
@@ -211,6 +187,7 @@ export default class Ball
 
     intersected(vx_sign, vy_sign)
     {
+        // отражение без учета специфики объектов
         this.touched += 1;
         this.vx = Math.abs(this.vx) * vx_sign;
         this.vy = Math.abs(this.vy) * vy_sign;

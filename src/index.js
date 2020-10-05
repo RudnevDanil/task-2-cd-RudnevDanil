@@ -93,63 +93,124 @@ function setup()
     }
 }
 
-function test_state() // debug
+function test_ball_triangle() // debug
 {
-    gs.numbObj = 15;
+    gs.numbObj = 11;
     for (let i = 0; i < gs.numbObj; i++)
-    {
-        gs.objs[i].x = 10;
-        gs.objs[i].vx = 0;
-        gs.objs[i].y = 110;
-        gs.objs[i].vy = 0;
-    }
+        gs.objs[i].touched = 3;
 
     // demonstrate ball-triangle collision
-    gs.objs[0].x = 110 + 200 * 1 - 70;
-    gs.objs[0].y = 110 + 200 * 0;
-    gs.objs[0].vy = 0.2;
-    gs.objs[1].x = 110 + 200 * 1;
-    gs.objs[1].y = 110 + 200 * 1;
-    gs.objs[1].vy = -0.2;
+    locate(0,1,2, false); gs.objs[0].x -= 70;
+    locate(1,1,3, true);
 
-    gs.objs[3].x = 110 + 200 * 2 + 70;
-    gs.objs[3].y = 110 + 200 * 0;
-    gs.objs[3].vy = 0.2;
-    gs.objs[4].x = 110 + 200 * 2;
-    gs.objs[4].y = 110 + 200 * 1;
-    gs.objs[4].vy = -0.2;
+    locate(3,2,2, false); gs.objs[3].x += 70;
+    locate(4,2,3, true);
 
-    gs.objs[6].x = 110 + 200 * 3;
-    gs.objs[6].y = 110 + 200 * 0;
-    gs.objs[6].vy = 0.2;
-    gs.objs[7].x = 110 + 200 * 3;
-    gs.objs[7].y = 110 + 200 * 1;
-    gs.objs[7].vy = -0.2;
+    locate(6,3,0, false);
+    locate(7,3,1, true);
 
-    gs.objs[9].x = 110 + 200 * 4;
-    gs.objs[9].y = 110 + 200 * 1;
-    gs.objs[9].vy = -0.2;
-    gs.objs[10].x = 110 + 200 * 4;
-    gs.objs[10].y = 110 + 200 * 0;
-    gs.objs[10].vy = 0.2;
-
-
-    /*let which_obj_to_move = 4;
-    let under_which_to_locate = 0;
-
-
-    gs.objs[which_obj_to_move].x = 110 + under_which_to_locate * 200 + 70;
-    gs.objs[which_obj_to_move].y = gs.objs[which_obj_to_move].y + 200;
-    gs.objs[which_obj_to_move].vy *= -0.3;*/
+    locate(9,4,0, false);
+    locate(10,4,1, true);
 }
 
-function test_ball_triangle_collision()
+function test_ball_hex() // debug
 {
+    gs.numbObj = 30;
+    for (let i = 0; i < gs.numbObj; i++)
+        gs.objs[i].touched = 3;
 
+    // demonstrate ball-triangle collision
+    locate(0,1,0, false); gs.objs[0].x -= 80;
+    locate(2,1,1, true);
+
+    locate(3,2,0, false); gs.objs[3].x += 80;
+    locate(5,2,1, true);
+
+    locate(6,3,0, false);
+    locate(8,3,1, true);
+
+    locate(9,4,0, false); gs.objs[9].x -= 40;
+    locate(11,4,1, true);
+
+    locate(12,5,0, false); gs.objs[12].x += 40;
+    locate(14,5,1, true);
+
+    locate(15,1,3, true); gs.objs[15].x -= 80;
+    locate(17,1,2, false);
+
+    locate(18,2,3, true); gs.objs[18].x += 80
+    locate(20,2,2, false);
+
+    locate(21,3,3, true);
+    locate(23,3,2, false);
+
+    locate(24,4,3, true); gs.objs[24].x -= 40;
+    locate(26,4,2, false);
+
+    locate(27,5,3, true); gs.objs[27].x += 40;
+    locate(29,5,2, false);
+
+}
+
+function test_hex_hex() // debug
+{
+    gs.numbObj = 30;
+    for (let i = 0; i < gs.numbObj; i++)
+        gs.objs[i].touched = 3;
+
+    // demonstrate ball-triangle collision
+    locate(2,1,0, false); gs.objs[2].x -= 80;
+    locate(5,1,1, true);
+
+    locate(8,2,0, false); gs.objs[8].x += 80;
+    locate(11,2,1, true);
+
+    locate(14,3,0, false);
+    locate(17,3,1, true);
+
+    locate(20,4,0, false); gs.objs[20].x -= 50;
+    locate(23,4,1, true);
+
+    locate(26,5,0, false); gs.objs[26].x += 50;
+    locate(29,5,1, true);
+}
+
+function test_triangle_triangle() // debug
+{
+    gs.numbObj = 17;
+    for (let i = 0; i < gs.numbObj; i++)
+        gs.objs[i].touched = 3;
+
+    // demonstrate ball-triangle collision
+    locate(1,1,0, false); gs.objs[1].x -= 60;
+    locate(4,1,1, true);
+
+    locate(7,2,0, false); gs.objs[7].x += 60;
+    locate(10,2,1, true);
+
+    locate(13,3,0, false);
+    locate(16,3,1, true);
+}
+
+function locate(f_n, f_x_offs, f_y_offs, is_up)
+{
+    gs.objs[f_n].x = 110 + 200 * f_x_offs;
+    gs.objs[f_n].y = 110 + 150 * f_y_offs;
+    gs.objs[f_n].vy = (is_up?-1:1) * 0.2;
+    gs.objs[f_n].touched = 0;
+    gs.objs[f_n].vx = 0;
+}
+
+function test_collision_demonstrate()
+{
+    //test_ball_triangle();
+    //test_ball_hex();
+    //test_hex_hex();
+    test_triangle_triangle()
 }
 
 
 setup();
 
-test_state();
+test_collision_demonstrate();
 run();
