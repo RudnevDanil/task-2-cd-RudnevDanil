@@ -144,7 +144,93 @@ export default class Triangle
         }
         else if (obj instanceof Hex)
         {
+            let dist = Math.sqrt((obj.x - this.x)*(obj.x - this.x)+(obj.y - this.y - this.p4)*(obj.y - this.y - this.p4));
+            if(dist < this.p3 + obj.k) // ball touches outside radius
+            {
+                if (dist < this.p3 / 2 + obj.p1)
+                {
+                    is_intersected = true; // ball touches inside radius
+                }
+                else
+                {
+                    let a_x_t = this.x - this.p2;
+                    let a_y_t = this.y + this.p1;
+                    let b_x_t = this.x;
+                    let b_y_t = this.y - this.p1;
+                    let c_x_t= this.x + this.p2;
+                    let c_y_t = this.y + this.p1;
 
+                    // obj points
+                    let a_x = obj.x - obj.p2;
+                    let a_y = obj.y + obj.p1;
+                    let b_x = obj.x - obj.k;
+                    let b_y = obj.y;
+                    let c_x = obj.x - obj.p2;
+                    let c_y = obj.y - obj.p1;
+                    let d_x = obj.x + obj.p2;
+                    let d_y = obj.y - obj.p1;
+                    let e_x = obj.x + obj.k;
+                    let e_y = obj.y;
+                    let f_x = obj.x + obj.p2;
+                    let f_y = obj.y + obj.p1;
+
+                    // line A --- B
+                    let AB_A = a_y - b_y;
+                    let AB_B = b_x - a_x;
+                    let AB_C = a_x * b_y - b_x * a_y;
+                    // line B --- C
+                    let BC_A = b_y - c_y;
+                    let BC_B = c_x - b_x;
+                    let BC_C = b_x * c_y - c_x * b_y;
+                    // line C --- D
+                    let CD_A = c_y - d_y;
+                    let CD_B = d_x - c_x;
+                    let CD_C = c_x * d_y - d_x * c_y;
+                    // line D --- E
+                    let DE_A = d_y - e_y;
+                    let DE_B = e_x - d_x;
+                    let DE_C = d_x * e_y - e_x * d_y;
+                    // line E --- F
+                    let EF_A = e_y - f_y;
+                    let EF_B = f_x - e_x;
+                    let EF_C = e_x * f_y - f_x * e_y;
+                    // line F --- A
+                    let FA_A = f_y - a_y;
+                    let FA_B = a_x - f_x;
+                    let FA_C = f_x * a_y - a_x * f_y;
+
+                    let dlp_1 = this._dist_lp(AB_A,AB_B,AB_C, a_x_t,a_y_t);
+                    let dlp_2 = this._dist_lp(BC_A,BC_B,BC_C, a_x_t,a_y_t);
+                    let dlp_3 = this._dist_lp(CD_A,CD_B,CD_C, a_x_t,a_y_t);
+                    let dlp_4 = this._dist_lp(DE_A,DE_B,DE_C, a_x_t,a_y_t);
+                    let dlp_5 = this._dist_lp(EF_A,EF_B,EF_C, a_x_t,a_y_t);
+                    let dlp_6 = this._dist_lp(FA_A,FA_B,FA_C, a_x_t,a_y_t);
+                    if(dlp_1 > 0 && dlp_2 > 0 && dlp_3 > 0 && dlp_4 > 0 && dlp_5 > 0 && dlp_6 > 0)
+                        is_intersected = true;
+                    else
+                    {
+                        dlp_1 = this._dist_lp(AB_A,AB_B,AB_C, b_x_t,b_y_t);
+                        dlp_2 = this._dist_lp(BC_A,BC_B,BC_C, b_x_t,b_y_t);
+                        dlp_3 = this._dist_lp(CD_A,CD_B,CD_C, b_x_t,b_y_t);
+                        dlp_4 = this._dist_lp(DE_A,DE_B,DE_C, b_x_t,b_y_t);
+                        dlp_5 = this._dist_lp(EF_A,EF_B,EF_C, b_x_t,b_y_t);
+                        dlp_6 = this._dist_lp(FA_A,FA_B,FA_C, b_x_t,b_y_t);
+                        if(dlp_1 > 0 && dlp_2 > 0 && dlp_3 > 0 && dlp_4 > 0 && dlp_5 > 0 && dlp_6 > 0)
+                            is_intersected = true;
+                        else
+                        {
+                            dlp_1 = this._dist_lp(AB_A,AB_B,AB_C, c_x_t,c_y_t);
+                            dlp_2 = this._dist_lp(BC_A,BC_B,BC_C, c_x_t,c_y_t);
+                            dlp_3 = this._dist_lp(CD_A,CD_B,CD_C, c_x_t,c_y_t);
+                            dlp_4 = this._dist_lp(DE_A,DE_B,DE_C, c_x_t,c_y_t);
+                            dlp_5 = this._dist_lp(EF_A,EF_B,EF_C, c_x_t,c_y_t);
+                            dlp_6 = this._dist_lp(FA_A,FA_B,FA_C, c_x_t,c_y_t);
+                            if(dlp_1 > 0 && dlp_2 > 0 && dlp_3 > 0 && dlp_4 > 0 && dlp_5 > 0 && dlp_6 > 0)
+                                is_intersected = true;
+                        }
+                    }
+                }
+            }
         }
         if(is_intersected)
         {

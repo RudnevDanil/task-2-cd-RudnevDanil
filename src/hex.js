@@ -55,7 +55,8 @@ export default class Hex
         }
         else if (obj instanceof Triangle)
         {
-
+            obj.check_intersects(this);
+            return;
         }
         else if (obj instanceof Hex)
         {

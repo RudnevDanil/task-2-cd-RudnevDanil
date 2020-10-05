@@ -93,6 +93,23 @@ function setup()
     }
 }
 
+function test_ball_ball() // debug
+{
+    gs.numbObj = 16;
+    for (let i = 0; i < gs.numbObj; i++)
+        gs.objs[i].touched = 3;
+
+    // demonstrate ball-triangle collision
+    locate(0,1,0, false, -70);
+    locate(3,1,1, true);
+
+    locate(6,2,0, false, 70);
+    locate(9,2,1, true);
+
+    locate(12,4,0, false);
+    locate(15,4,1, true);
+}
+
 function test_ball_triangle() // debug
 {
     gs.numbObj = 11;
@@ -100,10 +117,10 @@ function test_ball_triangle() // debug
         gs.objs[i].touched = 3;
 
     // demonstrate ball-triangle collision
-    locate(0,1,2, false); gs.objs[0].x -= 70;
+    locate(0,1,2, false, -70);
     locate(1,1,3, true);
 
-    locate(3,2,2, false); gs.objs[3].x += 70;
+    locate(3,2,2, false, 70);
     locate(4,2,3, true);
 
     locate(6,3,0, false);
@@ -120,34 +137,34 @@ function test_ball_hex() // debug
         gs.objs[i].touched = 3;
 
     // demonstrate ball-triangle collision
-    locate(0,1,0, false); gs.objs[0].x -= 80;
+    locate(0,1,0, false, -80);
     locate(2,1,1, true);
 
-    locate(3,2,0, false); gs.objs[3].x += 80;
+    locate(3,2,0, false, 80);
     locate(5,2,1, true);
 
     locate(6,3,0, false);
     locate(8,3,1, true);
 
-    locate(9,4,0, false); gs.objs[9].x -= 40;
+    locate(9,4,0, false, -40);
     locate(11,4,1, true);
 
-    locate(12,5,0, false); gs.objs[12].x += 40;
+    locate(12,5,0, false, 40);
     locate(14,5,1, true);
 
-    locate(15,1,3, true); gs.objs[15].x -= 80;
+    locate(15,1,3, true, -80);
     locate(17,1,2, false);
 
-    locate(18,2,3, true); gs.objs[18].x += 80
+    locate(18,2,3, true, 80);
     locate(20,2,2, false);
 
     locate(21,3,3, true);
     locate(23,3,2, false);
 
-    locate(24,4,3, true); gs.objs[24].x -= 40;
+    locate(24,4,3, true, -40);
     locate(26,4,2, false);
 
-    locate(27,5,3, true); gs.objs[27].x += 40;
+    locate(27,5,3, true, 40);
     locate(29,5,2, false);
 
 }
@@ -159,19 +176,19 @@ function test_hex_hex() // debug
         gs.objs[i].touched = 3;
 
     // demonstrate ball-triangle collision
-    locate(2,1,0, false); gs.objs[2].x -= 80;
+    locate(2,1,0, false, -80);
     locate(5,1,1, true);
 
-    locate(8,2,0, false); gs.objs[8].x += 80;
+    locate(8,2,0, false, 80);
     locate(11,2,1, true);
 
     locate(14,3,0, false);
     locate(17,3,1, true);
 
-    locate(20,4,0, false); gs.objs[20].x -= 50;
+    locate(20,4,0, false, -50);
     locate(23,4,1, true);
 
-    locate(26,5,0, false); gs.objs[26].x += 50;
+    locate(26,5,0, false, 50);
     locate(29,5,1, true);
 }
 
@@ -182,19 +199,45 @@ function test_triangle_triangle() // debug
         gs.objs[i].touched = 3;
 
     // demonstrate ball-triangle collision
-    locate(1,1,0, false); gs.objs[1].x -= 60;
+    locate(1,1,0, false, -60);
     locate(4,1,1, true);
 
-    locate(7,2,0, false); gs.objs[7].x += 60;
+    locate(7,2,0, false, 60);
     locate(10,2,1, true);
 
     locate(13,3,0, false);
     locate(16,3,1, true);
 }
 
-function locate(f_n, f_x_offs, f_y_offs, is_up)
+function test_triangle_hex() // debug
 {
-    gs.objs[f_n].x = 110 + 200 * f_x_offs;
+    gs.numbObj = 18;
+    for (let i = 0; i < gs.numbObj; i++)
+        gs.objs[i].touched = 3;
+
+    // demonstrate ball-triangle collision
+    locate(1,1,0, false, -90);
+    locate(2,1,1, true);
+
+    locate(4,2,0, false, 90);
+    locate(5,2,1, true);
+
+    locate(7,4,0, false);
+    locate(8,4,1, true);
+
+    locate(11,1,2, false, -60);
+    locate(10,1,3, true);
+
+    locate(14,2,2, false, 60);
+    locate(13,2,3, true);
+
+    locate(17,4,2, false);
+    locate(16,4,3, true);
+}
+
+function locate(f_n, f_x_offs, f_y_offs, is_up, offset_x = 0)
+{
+    gs.objs[f_n].x = 110 + 200 * f_x_offs + offset_x;
     gs.objs[f_n].y = 110 + 150 * f_y_offs;
     gs.objs[f_n].vy = (is_up?-1:1) * 0.2;
     gs.objs[f_n].touched = 0;
@@ -203,10 +246,12 @@ function locate(f_n, f_x_offs, f_y_offs, is_up)
 
 function test_collision_demonstrate()
 {
+    test_ball_ball();
     //test_ball_triangle();
     //test_ball_hex();
     //test_hex_hex();
-    test_triangle_triangle()
+    //test_triangle_triangle();
+    //test_triangle_hex();
 }
 
 
