@@ -1,12 +1,16 @@
 import Rectangle from './rectangle'
 
-export default class QuadTree {
-    constructor(boundary, capacity = 4) {
-        if (!boundary) {
+export default class QuadTree
+{
+    constructor(boundary, capacity = 4)
+    {
+        if (!boundary)
+        {
             throw TypeError('boundary is null or undefined')
         }
 
-        if (!(boundary instanceof Rectangle)) {
+        if (!(boundary instanceof Rectangle))
+        {
             throw TypeError('boundary should be a Rectangle')
         }
 
@@ -17,26 +21,32 @@ export default class QuadTree {
         this._children = []
     }
 
-    insert(point) {
+    insert(point)
+    {
         return true
     }
 
-    get length() {
+    get length()
+    {
         let count = this._points.length
-        if (this._hasChildren) {
+        if (this._hasChildren)
+        {
             // handle childrens somehow
         }
         return count
     }
 
-    queryRange(rect, found = []) {
+    queryRange(rect, found = [])
+    {
         return found
     }
 
-    _subdivide() {
+    _subdivide()
+    {
     }
 
-    clear() {
+    clear()
+    {
         // clear _points and _children arrays
         // see https://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
         this._points = []
