@@ -1,6 +1,7 @@
 import Ball from './hex'
 import Triangle from "./triangle";
 import Hex from "./hex";
+import Point from "./Point";
 
 describe('Hex constructor', () =>
 {
@@ -17,6 +18,18 @@ describe('Hex constructor', () =>
         expect(hex.vy).toBeLessThan(2.5)
         expect(hex.canv_w).toBe(500)
         expect(hex.canv_h).toBe(700)
+    })
+})
+
+describe('Hex center', () =>
+{
+    it('should calculate center', () =>
+    {
+        const hex = new Hex(100,200,20,5,500,700);
+        let p = hex.center()
+
+        expect(p.x).toBe(100)
+        expect(p.y).toBe(200)
     })
 })
 

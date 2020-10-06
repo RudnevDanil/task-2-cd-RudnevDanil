@@ -1,4 +1,7 @@
 import Rectangle from './rectangle'
+import Triangle from "./triangle";
+import Ball from "./ball";
+import Hex from "./hex";
 
 describe('Rectangle getters', () => {
     it('should calculate borders correctly', () => {
@@ -117,4 +120,51 @@ describe('Rectangle.intersects()', () => {
         const otherRect = new Rectangle(10, 10, 1, 1)
         expect(rect.intersects(otherRect)).toBeFalsy()
     })
+
+    it('should returns true if triangle is intersected',() => {
+        const  tr = new Triangle(2,2,3, 5, 500, 700)
+        expect(rect.intersects(tr)).toBeTruthy()
+
+    })
+
+    it('should returns true if triangle is intersected',() => {
+        const  tr = new Triangle(3,3,3, 5, 500, 700)
+        expect(rect.intersects(tr)).toBeTruthy()
+
+    })
+
+    it('should returns true if triangle is intersected',() => {
+        const another = new Rectangle(2,2,4,4)
+        const  tr = new Triangle(3,2,5, 5, 500, 700)
+        expect(another.intersects(tr)).toBeTruthy()
+
+    })
+
+    it('should returns false if triangle is intersected',() => {
+        const  tr = new Triangle(40,4,2, 5, 500, 700)
+        expect(rect.intersects(tr)).toBeFalsy()
+    })
+
+    it('should returns true if Ball is intersected',() => {
+        const  c = new Ball(2,2,2, 5, 500, 700)
+        expect(rect.intersects(c)).toBeTruthy()
+
+    })
+
+    it('should returns false if Ball is intersected',() => {
+        const  c = new Ball(10,10,1, 5, 500, 700)
+        expect(rect.intersects(c)).toBeFalsy()
+    })
+
+    it('should returns true if hexagon is intersected',() => {
+        const  h = new Hex(2,3,2, 5, 500, 700)
+        expect(rect.intersects(h)).toBeTruthy()
+
+    })
+
+    it('should returns false if hexagon is intersected',() => {
+        const  h = new Hex(10,10,1, 5, 500, 700)
+        expect(rect.intersects(h)).toBeFalsy()
+    })
+
 })

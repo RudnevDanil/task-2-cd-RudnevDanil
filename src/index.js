@@ -1,6 +1,8 @@
 import Ball from './ball'
 import Triangle from './triangle'
 import Hex from './hex'
+import Rectangle from './rectangle'
+import QuadTree from "./quad-tree";
 
 const canvas = document.getElementById("cnvs");
 
@@ -38,11 +40,37 @@ function update(tick)
     }
 
     // intersections
+    usual_collisions()
+    //collisionsTree()
+}
+
+function usual_collisions()
+{
     for(let i = 0; i < gs.numbObj - 1; i++)
     {
         for(let j = i + 1; j < gs.numbObj; j++)
         {
             gs.objs[i].check_intersects(gs.objs[j]);
+        }
+    }
+}
+
+function  collisionsTree(){
+    let tree = new QuadTree(gs.area)
+    let points = []
+    for(let fig of gs.objs)
+        points.push(fig.center())
+    points.forEach(p=>tree.insert(p))
+    let candidates =[]
+    for (let i = 0;i< points.length;i++) {
+        const len = 100
+        const bounds = new Rectangle(points[i].x-50, points[i].y-50, len, len)
+        tree.queryRange(bounds, candidates)
+        for (let other of candidates) {
+            if (points[i].figure != other.figure)
+            {
+                points[i].figure.check_intersects(other.figure)
+            }
         }
     }
 }
@@ -75,8 +103,10 @@ function setup()
     gs.lastTick = performance.now()
     gs.lastRender = gs.lastTick
     gs.tickLength = 15 //ms
+    //gs.figures = new Array()
+    gs.area = new Rectangle(0,0,canvas.width,canvas.height)
 
-    gs.numbObj = 1000;
+    gs.numbObj = 500;
     gs.objs = [];
     //gs.elements_k = [50, 100, 50]; // radius or wall side
     gs.elements_k = [5, 10, 5]; // radius or wall side

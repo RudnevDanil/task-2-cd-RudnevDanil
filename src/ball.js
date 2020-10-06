@@ -1,5 +1,6 @@
 import Triangle from "./triangle";
 import Hex from "./hex";
+import Point from "./Point";
 
 export default class Ball
 {
@@ -14,6 +15,11 @@ export default class Ball
         this.vy = (Math.random()-0.5) * base_obj_speed;
         this.canv_w = canv_w;
         this.canv_h = canv_h;
+    }
+
+    center()
+    {
+        return new Point(this.x,this.y,this)
     }
 
     move()
