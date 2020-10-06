@@ -90,7 +90,7 @@ describe('Triangle activity if intersected', () =>
 })
 
 describe('Triangle touched max = 3', () => {
-    it('if triangle_2 was touched enough', () => {
+    it('if triangle was touched enough', () => {
         const triangle_1 = new Triangle(100, 200, 20, 5, 500, 700);
         const triangle_2 = new Triangle(101, 201, 20, 5, 500, 700);
 
@@ -102,7 +102,7 @@ describe('Triangle touched max = 3', () => {
         expect(triangle_2.y).toBeCloseTo(201)
     })
 
-    it('if triangle_2 was touched enough', () => {
+    it('if triangle was touched enough', () => {
         const triangle_1 = new Triangle(100, 200, 20, 5, 500, 700);
         const triangle_2 = new Triangle(101, 201, 20, 5, 500, 700);
 

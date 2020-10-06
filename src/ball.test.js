@@ -291,6 +291,7 @@ describe('Ball - Hex collision', () => {
         ball.check_intersects(hex)
         expect(ball.touched).toBe(1)
         expect(ball.y).toBeGreaterThan(237)
+        expect(hex.touched).toBe(1)
     })
 
     it('ball - hex NOT intersect by shapes from bottom', () =>
