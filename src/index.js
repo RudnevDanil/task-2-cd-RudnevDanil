@@ -44,6 +44,17 @@ function update(tick)
     //collisionsTree()
 }
 
+let use_demonsrate_sizes = false;
+function test_collision_demonstrate()
+{
+    //test_ball_ball();
+    //test_ball_triangle();
+    //test_ball_hex();
+    //test_hex_hex();
+    //test_triangle_triangle();
+    //test_triangle_hex();
+}
+
 function usual_collisions()
 {
     for(let i = 0; i < gs.numbObj - 1; i++)
@@ -106,10 +117,14 @@ function setup()
     //gs.figures = new Array()
     gs.area = new Rectangle(0,0,canvas.width,canvas.height)
 
-    gs.numbObj = 500;
+    gs.numbObj = 100;
     gs.objs = [];
-    //gs.elements_k = [50, 100, 50]; // radius or wall side
-    gs.elements_k = [5, 10, 5]; // radius or wall side
+
+    if(use_demonsrate_sizes)
+        gs.elements_k = [50, 100, 50]; // radius or wall side
+    else
+        gs.elements_k = [5, 10, 5]; // radius or wall side
+
     gs.base_obj_speed = 3;
     for(let i = 0; i < gs.numbObj; i++)
     {
@@ -275,18 +290,8 @@ function locate(f_n, f_x_offs, f_y_offs, is_up, offset_x = 0)
     gs.objs[f_n].vx = 0;
 }
 
-function test_collision_demonstrate()
-{
-    //test_ball_ball();
-    //test_ball_triangle();
-    //test_ball_hex();
-    //test_hex_hex();
-    //test_triangle_triangle();
-    //test_triangle_hex();
-}
-
-
 setup();
 
 test_collision_demonstrate();
+
 run();
