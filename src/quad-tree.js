@@ -33,7 +33,9 @@ export default class QuadTree {
     get length() {
         let count = this._points.length
         if (this._hasChildren) {
-            // handle childrens somehow
+            for (let child of this._children){
+                count += child.length
+            }
         }
         return count
     }
@@ -46,15 +48,13 @@ export default class QuadTree {
 
         for (const p of pts) {
             if (rect.contains(p)) {
-                // console.log("contains point", p);
+                //console.log("contains point", p);
                 found.push(p);
             }
         }
-
         if (this._hasChildren) {
             children.forEach(child => child.queryRange(rect, found));
         }
-
         return found
     }
 
