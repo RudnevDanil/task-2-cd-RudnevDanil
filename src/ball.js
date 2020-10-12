@@ -185,9 +185,79 @@ export default class Ball
                 this_vx_sign = -1;
             if(this.y < obj.y)
                 this_vy_sign = -1;
-            this.intersected(this_vx_sign, this_vy_sign);
-            obj.intersected(-this_vx_sign, -this_vy_sign);
+
+            if(this instanceof Ball && obj instanceof Ball)
+            {
+                let a0x = obj.x, a0y = obj.y, a2x = this.x, a2y = this.y, r1 = obj.k, r2 = this.k, a1vx = obj.vx, a1vy = obj.vy, a2vx = this.vx, a2vy = this.vy;
+                this.intersected_by_angle(a0x, a0y, a2x, a2y, r1, r2, a2vx, a2vy);
+                obj.intersected_by_angle(a2x, a2y, a0x, a0y, r2, r1, a1vx, a1vy);
+            }
+            else
+            {
+                this.intersected(this_vx_sign, this_vy_sign);
+                obj.intersected(-this_vx_sign, -this_vy_sign);
+            }
         }
+    }
+
+    intersected_by_angle(a0x, a0y, a2x, a2y, r1, r2, a2vx, a2vy)
+    {
+        // find A0A2
+        let a0a2 = {};
+        a0a2.par_a = a0y - a2y;
+        a0a2.par_b = a2x - a0x;
+        a0a2.par_c = a0x * a2y - a2x * a0y;
+
+        // find a4
+        let a4 = {};
+        if(a0x < a2x)
+            a4.x = a2x + 15//r2/2;
+        else
+            a4.x = a2x - 15//r2/2;
+        if(a0a2.par_b == 0) // balls under each other 90 deg
+            a4.y = a0y;
+        else
+            a4.y = (- a0a2.par_c - a0a2.par_a * a4.x) / a0a2.par_b;
+
+        // find vectors
+        let a1 = {x: a2x - a2vx, y: a2y - a2vy};
+        let a1a2vec = {x: a2x - a1.x, y: a2y - a1.y};
+        if(a1a2vec.x == 0)
+            a1a2vec.x = a1a2vec.x + 0.01;
+        if(a1a2vec.y == 0)
+            a1a2vec.y = a1a2vec.y + 0.01;
+
+        let a2a4vec = {x: a4.x - a2x, y: a4.y - a2y};
+        let phi = (a1a2vec.x * a2a4vec.x + a1a2vec.y * a2a4vec.y)/(Math.sqrt(a1a2vec.x * a1a2vec.x + a1a2vec.y * a1a2vec.y)*Math.sqrt(a2a4vec.x * a2a4vec.x + a2a4vec.y * a2a4vec.y))
+        if(isNaN(phi))
+        {
+            console.log("phi is NAN")
+        }
+        console.log(phi);
+
+        // find a3
+        let a3 = {};
+        a3.x = a2x + (a4.x - a2x) * Math.cos(phi) - (a4.y - a2y) * Math.sin(phi);
+        a3.y = a2y + (a4.x - a2x) * Math.sin(phi) + (a4.y - a2y) * Math.cos(phi);
+
+        let a2a3vect = {x: a3.x - a2x, y: a3.y - a2y};
+        let max_a2a3vect = Math.max(Math.abs(a2a3vect.x), Math.abs(a2a3vect.y));
+        a2a3vect.x = a2a3vect.x / max_a2a3vect;
+        a2a3vect.y = a2a3vect.y / max_a2a3vect;
+
+        let old_speed = Math.sqrt(a2vx * a2vx + a2vy * a2vy);
+        let new_speed = Math.sqrt(a3.x * a3.x + a3.y * a3.y);
+
+
+        console.log("a2a3vect.x = ", a2a3vect.x , "   a2a3vect.y = " , a2a3vect.y)
+        console.log("this.vx = ", this.vx , "   this.vy = " , this.vy)
+
+        console.log(old_speed)
+        console.log(new_speed)
+
+        this.vx = a2a3vect.x// * old_speed * 0.5;
+        this.vy = a2a3vect.y// * old_speed * 0.5;
+        console.log("--------------")
     }
 
     intersected(vx_sign, vy_sign)

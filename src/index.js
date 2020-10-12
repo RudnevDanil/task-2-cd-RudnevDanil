@@ -44,10 +44,10 @@ function update(tick)
     //collisionsTree()
 }
 
-let use_demonsrate_sizes = false;
+let use_demonsrate_sizes = true;
 function test_collision_demonstrate()
 {
-    //test_ball_ball();
+    test_ball_ball();
     //test_ball_triangle();
     //test_ball_hex();
     //test_hex_hex();
@@ -143,7 +143,11 @@ function test_ball_ball() // debug
 {
     gs.numbObj = 16;
     for (let i = 0; i < gs.numbObj; i++)
+    {
         gs.objs[i].touched = 3;
+        gs.objs[i].vy *= 3;
+        gs.objs[i].vx *= 3;
+    }
 
     // demonstrate ball-triangle collision
     locate(0,1,0, false, -70);
@@ -154,6 +158,12 @@ function test_ball_ball() // debug
 
     locate(12,4,0, false);
     locate(15,4,1, true);
+
+    for (let i = 0; i < gs.numbObj; i++)
+    {
+        gs.objs[i].vy *= 3;
+        gs.objs[i].vx *= 3;
+    }
 }
 
 function test_ball_triangle() // debug
