@@ -233,7 +233,6 @@ export default class Ball
         {
             console.log("phi is NAN")
         }
-        console.log(phi);
 
         // find a3
         let a3 = {};
@@ -248,16 +247,11 @@ export default class Ball
         let old_speed = Math.sqrt(a2vx * a2vx + a2vy * a2vy);
         let new_speed = Math.sqrt(a3.x * a3.x + a3.y * a3.y);
 
-
-        console.log("a2a3vect.x = ", a2a3vect.x , "   a2a3vect.y = " , a2a3vect.y)
-        console.log("this.vx = ", this.vx , "   this.vy = " , this.vy)
-
-        console.log(old_speed)
-        console.log(new_speed)
-
         this.vx = a2a3vect.x// * old_speed * 0.5;
         this.vy = a2a3vect.y// * old_speed * 0.5;
-        console.log("--------------")
+
+        this.touched += 1;
+        this.move();
     }
 
     intersected(vx_sign, vy_sign)

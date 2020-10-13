@@ -139,10 +139,10 @@ describe('Ball - Ball collision', () =>
         ball_1.check_intersects(ball_2)
         expect(ball_1.touched).toBe(1)
         expect(ball_2.touched).toBe(1)
-        expect(ball_1.x).toBeLessThan(100)
-        expect(ball_1.y).toBeLessThan(200)
-        expect(ball_2.x).toBeGreaterThan(101)
-        expect(ball_2.y).toBeGreaterThan(201)
+        expect(ball_1.x).toBeLessThan(103)
+        expect(ball_1.y).toBeLessThan(203)
+        expect(ball_2.x).toBeGreaterThan(100)
+        expect(ball_2.y).toBeLessThan(203)
     })
 
     it('ball - ball NOT intersect', () =>
